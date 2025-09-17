@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ethereal Data State — Dynamic Collapse (SQMSAI5D Demo)</title>
+<meta name="description" content="Interactive demo of dynamic collapse in an ethereal latent space with 5D safe-transit metaphor, exportable to video." />
+<style>
+  :root{
+    --bg:#0b0c0f; --panel:#12141a; --text:#e6e6e6; --muted:#9aa1aa;
+    --accent:#5dd3ff; --accent2:#ffd166; --ok:#6dd57e; --warn:#ff9f5a;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;color:var(--text);
+    background: radial-gradient(1200px 800px at 15% -10%, #142034 0%, #0b0c0f 55%) no-repeat;
+    font: 15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    display:grid;place-items:center;
+  }
+  main{
+    width:min(1100px,92vw);
+    background:linear-gradient(180deg,#12141a 0%,#0f1117 100%);
+    border:1px solid #1c2130;border-radius:14px;
+    box-shadow:0 12px 40px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.04);
+    overflow:hidden;
+  }
+  header{padding:16px 18px;border-bottom:1px solid #1b2030;display:flex;gap:14px;align-items:baseline;flex-wrap:wrap}
+  header h1{margin:0;font-size:clamp(18px,2.2vw,22px);letter-spacing:.3px}
+  header .subtitle{color:var(--muted);font-size:13px}
+  #wrap{padding:14px 14px 6px 14px}
+  canvas{
+    width:100%;aspect-ratio:1/1;display:block;
+    background:#0e1117;border:1px solid #1a1f2b;border-radius:12px;
+  }
+  .controls{
+    display:grid;grid-template-columns:repeat(6,minmax(0,1fr));
+    gap:10px;padding:12px 14px 10px 14px;
+  }
+  .item{
+    background:#10141d;border:1px solid #1a2030;border-radius:10px;
+    padding:10px 12px;display:grid;gap:8px
+  }
+  .controls label{color:var(--muted);font-size:12px}
+  .controls input[type="range"]{width:100%}
+  .controls input[type="checkbox"]{transform:scale(1.1)}
+  .controls button{
+    width:100%;padding:10px 12px;border-radius:8px;
+    border:1px solid #263049;background:#131a26;color:var(--text);cursor:pointer
+  }
+  .controls button:hover{border-color:#2f3c5a}
+  .hint{color:var(--muted);font-size:12px}
+  .badge{display:inline-block;padding:.2em .55em;border:1px solid #24415d;border-radius:999px;background:#0f1a27;color:#bfe8ff;font-size:11px}
+  section.about{padding:0 18px 18px 18px}
+  section.about h2{margin:8px 0 6px 0;font-size:16px}
+  section.about p{color:#b7c0cf;margin:8px 0 0 0}
+  footer{padding:0 18px 18px;color:var(--muted);font-size:13px}
+  @media (max-width: 860px){.controls{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Ethereal Data State: Dynamic Collapse</h1>
+    <div class="subtitle">SQMSAI5D visualization — moving focus induces local collapse <span class="badge">exportable</span></div>
+  </header>
+
+  <div id="wrap">
+    <canvas id="viz" aria-label="Ethereal data state visualization"></canvas>
+  </div>
+
+  <section class="controls" aria-label="controls">
+    <div class="item">
+      <label for="speed">Focus speed</label>
+      <input id="speed" type="range" min="0" max="1" step="0.001" value="0.35" />
+    </div>
+    <div class="item">
+      <label for="radius">Collapse radius</label>
+      <input id="radius" type="range" min="0.4" max="2.5" step="0.01" value="1.2" />
+    </div>
+    <div class="item">
+      <label for="points">Points</label>
+      <input id="points" type="range" min="200" max="3000" step="50" value="1200" />
+    </div>
+    <div class="item">
+      <button id="toggle">⏸️ Pause</button>
+      <button id="reset" style="margin-top:8px">🔄 Reset</button>
+    </div>
+    <div class="item">
+      <button id="regenerate">🎲 Regenerate field</button>
+      <span class="hint">3-cluster Gaussian mixture • equal XY scale</span>
+    </div>
+    <div class="item">
+      <button id="exportGif">⬇️ Export GIF/Video</button>
+      <span class="hint">Downloads a small looping <b>.webm</b>.</span>
+    </div>
+    <div class="item">
+      <label><input id="secureTrails" type="checkbox" checked /> Secure Transit Trails</label>
+      <span class="hint">Renders short-lived protected paths while data moves through the 5D cloud metaphor.</span>
+    </div>
+  </section>
+
+  <!-- ABOUT / CAPTION -->
+  <section class="about" aria-label="about">
+    <h2>About this Demo</h2>
+    <p><b>Dynamic Collapse</b> here represents the <i>real-time contraction</i> of a data field in a latent space. Each dot is a fragment of information. As the moving focus passes, points inside its influence radius are clarified and pulled into a denser state. Outside the circle, data remains diffuse.</p>
+    <p>This is a visualization metaphor for how complex systems (physical, informational, or quantum-inspired) can reorganize rapidly under dynamic forces. Rather than “losing” information, the state <i>re-expresses</i> it locally with higher certainty—similar to progressive failure/collapse in engineering, but directed and reversible in a data context.</p>
+    <p><b>Safe travel in the Ethereal 5D Cloud.</b> In Owen/QASAI terms, data moves through higher-dimensional routes with: (1) <b>localization</b> (temporary collapse near the agent’s lens), (2) <b>isolation</b> (bounded radius limits exposure), and (3) <b>ephemeral paths</b> (short-lived trails that decay). Toggle “Secure Transit Trails” to see the protected paths: they fade quickly, symbolizing encrypted, multi-party channels and forward-secure key cycles as information traverses the space.</p>
+  </section>
+
+  <footer>
+    Narration: “In the ethereal state, data lives as a probabilistic cloud. As an agent’s focus moves, information within its sphere of attention collapses into clarity — then diffuses again as it continues its safe passage.”
+  </footer>
+</main>
+
+<script>
+/* =========================
+   Utility RNG + Gaussian
+   ========================= */
+function mulberry32(seed){let t=seed>>>0;return function(){t|=0;t=(t+0x6D2B79F5)|0;let r=Math.imul(t^(t>>>15),1|t);r=(r+Math.imul(r^(r>>>7),61|r))^r;return((r^(r>>>14))>>>0)/4294967296;}}
+function randn(rng){const u=Math.max(rng(),1e-12),v=rng();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+function gaussian(rng,mu=0,sigma=1){return mu+sigma*randn(rng);}
+
+/* =========================
+   Domain & Canvas scaling
+   ========================= */
+const DOMAIN={xmin:-5,xmax:6,ymin:-3,ymax:4};
+const canvas=document.getElementById('viz'); const ctx=canvas.getContext('2d');
+let W=800,H=800,DPR=Math.min(window.devicePixelRatio||1,2),SCALE=1,MARGINX=0,MARGINY=0;
+function resize(){
+  const bb=canvas.getBoundingClientRect();
+  W=Math.round(bb.width*DPR); H=Math.round(bb.height*DPR);
+  canvas.width=W; canvas.height=H;
+  const sx=W/(DOMAIN.xmax-DOMAIN.xmin), sy=H/(DOMAIN.ymax-DOMAIN.ymin);
+  SCALE=Math.min(sx,sy);
+  const plotW=(DOMAIN.xmax-DOMAIN.xmin)*SCALE, plotH=(DOMAIN.ymax-DOMAIN.ymin)*SCALE;
+  MARGINX=(W-plotW)/2; MARGINY=(H-plotH)/2;
+}
+function toPX(x,y){const px=MARGINX+(x-DOMAIN.xmin)*SCALE; const py=H-(MARGINY+(y-DOMAIN.ymin)*SCALE); return [px,py];}
+resize(); window.addEventListener('resize', resize);
+
+/* =========================
+   Data generation
+   ========================= */
+const DEFAULTS={centers:[
+  {x:0.0,y:0.0,sigma:0.8,w:0.45},
+  {x:4.0,y:1.5,sigma:0.6,w:0.35},
+  {x:-3.0,y:2.5,sigma:1.0,w:0.20},
+]};
+let rng=mulberry32(42), points=[];
+function regenerate(n=1200){
+  points.length=0;
+  const w=DEFAULTS.centers.map(c=>c.w);
+  const cdf=[]; let acc=0; for(const wi of w){acc+=wi; cdf.push(acc);}
+  for(let i=0;i<n;i++){
+    const r=rng(); const k=cdf.findIndex(v=>r<=v), c=DEFAULTS.centers[k];
+    points.push({x:gaussian(rng,c.x,c.sigma), y:gaussian(rng,c.y,c.sigma), vx:0, vy:0, lastFx:null, lastFy:null, trailAge:0});
+  }
+}
+regenerate();
+
+/* =========================
+   Motion & Controls
+   ========================= */
+let t=0, playing=true;
+const speedEl=document.getElementById('speed');
+const radiusEl=document.getElementById('radius');
+const pointsEl=document.getElementById('points');
+const toggleBtn=document.getElementById('toggle');
+const resetBtn=document.getElementById('reset');
+const regenBtn=document.getElementById('regenerate');
+const exportBtn=document.getElementById('exportGif');
+const secureTrailsEl=document.getElementById('secureTrails');
+
+toggleBtn.onclick=()=>{playing=!playing; toggleBtn.textContent=playing?'⏸️ Pause':'▶️ Play';};
+resetBtn.onclick=()=>{t=0; for(const p of points){p.vx=p.vy=0; p.lastFx=p.lastFy=null; p.trailAge=0;}};
+regenBtn.onclick=()=>{rng=mulberry32((Math.random()*1e9)|0); regenerate(pointsEl.value|0);};
+pointsEl.oninput=(e)=>{regenerate(e.target.value|0);};
+
+function focusAt(paramT){const cx=1.5,cy=0.4,rx=2.5,ry=1.5; return {x:cx+rx*Math.cos(paramT), y:cy+ry*Math.sin(paramT)};}
+
+/* =========================
+   Drawing helpers
+   ========================= */
+function drawGrid(){
+  ctx.save(); ctx.lineWidth=1; ctx.strokeStyle="rgba(255,255,255,0.045)";
+  for(let x=Math.ceil(DOMAIN.xmin); x<=Math.floor(DOMAIN.xmax); x+=1){
+    const [px]=toPX(x,0); ctx.beginPath(); ctx.moveTo(px,MARGINY); ctx.lineTo(px,H-MARGINY); ctx.stroke();
+  }
+  for(let y=Math.ceil(DOMAIN.ymin); y<=Math.floor(DOMAIN.ymax); y+=1){
+    const [,py]=toPX(0,y); ctx.beginPath(); ctx.moveTo(MARGINX,py); ctx.lineTo(W-MARGINX,py); ctx.stroke();
+  }
+  ctx.restore();
+}
+function drawAxes(){
+  ctx.save();
+  ctx.font=`${22*DPR}px system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial`; ctx.fillStyle="#e9eef7";
+  ctx.fillText("Ethereal Data State: Dynamic Collapse", 18*DPR, 30*DPR);
+  ctx.font=`${14*DPR}px system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial`; ctx.fillStyle="#b7c0cf";
+  ctx.fillText("Latent Dimension X", W/2-70*DPR, H-8*DPR);
+  ctx.save(); ctx.translate(12*DPR, H/2+70*DPR); ctx.rotate(-Math.PI/2);
+  ctx.fillText("Latent Dimension Y", 0, 0); ctx.restore(); ctx.restore();
+}
+
+/* =========================
+   Render loop
+   ========================= */
+function render(){
+  ctx.clearRect(0,0,W,H); ctx.fillStyle="#0e1117"; ctx.fillRect(0,0,W,H);
+  drawGrid(); drawAxes();
+  if(playing) t += (parseFloat(speedEl.value)||0.35)*0.03;
+  const focus=focusAt(t), R=parseFloat(radiusEl.value)||1.2, R2=R*R;
+
+  /* Cloud (diffuse) */
+  ctx.save(); ctx.globalAlpha=0.18; ctx.fillStyle="#ffd166";
+  for(const p of points){const [px,py]=toPX(p.x,p.y); ctx.fillRect(px,py,2*DPR,2*DPR);}
+  ctx.restore();
+
+  /* Collapsed points + secure trails */
+  const trailsOn = secureTrailsEl.checked;
+
+  ctx.save();
+  for(const p of points){
+    const dx=p.x-focus.x, dy=p.y-focus.y, d2=dx*dx+dy*dy;
+    const inside = d2<=R2;
+
+    if(inside){
+      // gentle pull toward local clarity (not fully re-positioning; just suggestive)
+      const dist=Math.sqrt(d2)+1e-6, pull=0.015*(R/dist);
+      p.vx += -dx*pull; p.vy += -dy*pull;
+
+      // keep a short-lived record of last focus position for a protected trail
+      if(trailsOn){
+        p.lastFx = focus.x; p.lastFy = focus.y;
+        p.trailAge = 1.0; // reset age when refreshed
+      }
+    }
+
+    // damping for stability
+    p.vx *= 0.92; p.vy *= 0.92;
+    p.x += p.vx; p.y += p.vy;
+
+    // draw point if inside (collapsed visualization)
+    if(inside){
+      const [px,py]=toPX(p.x,p.y);
+      ctx.globalAlpha=0.9; ctx.fillStyle= "#5dd3ff";
+      ctx.beginPath(); ctx.arc(px,py,2.2*DPR,0,Math.PI*2); ctx.fill();
+    }
+  }
+  ctx.restore();
+
+  /* Secure Transit Trails (ephemeral, fading fast) */
+  if(trailsOn){
+    ctx.save();
+    for(const p of points){
+      if(p.trailAge>0 && p.lastFx!=null){
+        const [x1,y1]=toPX(p.x,p.y);
+        const [x2,y2]=toPX(p.lastFx,p.lastFy);
+        const a = Math.max(0, Math.min(0.35, p.trailAge*0.35));
+        ctx.strokeStyle=`rgba(93,211,255,${a})`;
+        ctx.lineWidth=1.3*DPR;
+        ctx.beginPath(); ctx.moveTo(x1,y1);
+        // slight curve to imply higher-dimensional hop
+        const cx=(x1+x2)/2 + 18*DPR*(Math.random()-0.5);
+        const cy=(y1+y2)/2 + 18*DPR*(Math.random()-0.5);
+        ctx.quadraticCurveTo(cx,cy,x2,y2);
+        ctx.stroke();
+
+        // dotted shield marker near focus (symbolic)
+        ctx.setLineDash([5*DPR,4*DPR]);
+        ctx.beginPath(); ctx.arc(x2,y2,6*DPR,0,Math.PI*2); ctx.stroke();
+        ctx.setLineDash([]);
+
+        p.trailAge -= 0.05; // fast fade (ephemeral)
+        if(p.trailAge<=0){p.lastFx=null;p.lastFy=null;}
+      }
+    }
+    ctx.restore();
+  }
+
+  /* Focus circle (lens) */
+  const [fx,fy]=toPX(focus.x,focus.y); ctx.save();
+  ctx.lineWidth=2*DPR; ctx.setLineDash([8*DPR,6*DPR]); ctx.strokeStyle="#cfd6e6";
+  ctx.beginPath(); ctx.arc(fx,fy,R*SCALE,0,Math.PI*2); ctx.stroke();
+  // soft glow
+  const grd=ctx.createRadialGradient(fx,fy,0,fx,fy,R*SCALE);
+  grd.addColorStop(0,"rgba(93,211,255,0.12)"); grd.addColorStop(1,"rgba(93,211,255,0)");
+  ctx.fillStyle=grd; ctx.beginPath(); ctx.arc(fx,fy,R*SCALE,0,Math.PI*2); ctx.fill();
+  ctx.restore();
+
+  requestAnimationFrame(render);
+}
+requestAnimationFrame(render);
+
+/* =========================
+   Export: capture canvas to loopable WEBM
+   ========================= */
+let recording=false;
+document.getElementById('exportGif').addEventListener('click', ()=>{
+  if(recording) return;
+  const durationSec=6, fps=30;
+  playing=true; document.getElementById('toggle').textContent='⏸️ Pause';
+  const stream=canvas.captureStream(fps);
+  const chunks=[];
+  let mime='video/webm;codecs=vp9';
+  if(!MediaRecorder.isTypeSupported(mime)) mime='video/webm;codecs=vp8';
+  const rec=new MediaRecorder(stream,{mimeType:mime});
+  rec.ondataavailable=e=>{if(e.data.size) chunks.push(e.data);};
+  rec.onstop=()=>{
+    const blob=new Blob(chunks,{type:'video/webm'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a'); a.href=url; a.download='ethereal-data-loop.webm';
+    document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    recording=false; document.getElementById('exportGif').textContent='⬇️ Export GIF/Video';
+  };
+  rec.start();
+  recording=true; document.getElementById('exportGif').textContent='⏳ Recording…';
+  setTimeout(()=>rec.stop(), durationSec*1000);
+});
+</script>
+</body>
+</html>
